@@ -22,12 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('category.urls')),
     path('', include('users.urls')),
-    path('', include('brands.urls')),
-    path('', include('service.urls')),
-    path('', include('blogs.urls')),
-    path('category/', include('Api.urls')),
+    path('Api/', include('Api.urls')),
     path('docs-swagger/',schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
-    path('docs-redoc/',schema_view.with_ui('redoc', cache_timeout=0), name='rodoc'),
+    path('docs-redoc/',schema_view.with_ui('redoc', cache_timeout=0), name='redoc'),
 
 ]
 urlpatterns +=  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

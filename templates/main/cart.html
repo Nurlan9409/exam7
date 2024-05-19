@@ -7,7 +7,7 @@
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="#">Home</a></li>
+				  <li><a href="{%url 'landing'%}">Home</a></li>
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
@@ -15,18 +15,26 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr class="cart_menu">
-							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td></td>
+							{% for item in cart_items %}
+						<tr>
+							<td>{{ item.product.name }}</td>
+							<td>{{ item.quantity }}</td>
+							<td>${{ item.product.price }}</td>
+							<td>${{ item.get_total_price }}</td>
+							<td>
+								<form action="{% url 'remove_from_cart' item.product.id %}" method="post">
+									{% csrf_token %}
+									<button type="submit">Remove</button>
+								</form>
+							</td>
+						</tr>
+						{% endfor %}
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="../../static/images/cart/one.png" alt=""></a>
+								<a href=""><img src="../../static/main/images/cart/one.png" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">Colorblock Scuba</a></h4>
@@ -52,7 +60,7 @@
 
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="../../static/images/cart/two.png" alt=""></a>
+								<a href=""><img src="../../static/main/images/cart/two.png" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">Colorblock Scuba</a></h4>
@@ -77,7 +85,7 @@
 						</tr>
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="../../static/images/cart/three.png" alt=""></a>
+								<a href=""><img src="../../static/main/images/cart/three.png" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">Colorblock Scuba</a></h4>
@@ -198,7 +206,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="../../static/images/home/iframe1.png" alt="" />
+										<img src="../../static/main/images/home/iframe1.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -213,7 +221,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="../../static/images/home/iframe2.png" alt="" />
+										<img src="../../static/main/images/home/iframe2.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -228,7 +236,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="../../static/images/home/iframe3.png" alt="" />
+										<img src="../../static/main/images/home/iframe3.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -243,7 +251,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="../../static/images/home/iframe4.png" alt="" />
+										<img src="../../static/main/images/home/iframe4.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -256,7 +264,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="address">
-							<img src="../../static/images/home/map.png" alt="" />
+							<img src="../../static/main/images/home/map.png" alt="" />
 							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
 						</div>
 					</div>

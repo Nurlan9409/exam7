@@ -1,0 +1,23 @@
+									<div class="panel-body">
+										{% for products in product %}
+											<ul>
+											<h2>Mens Wear:</h2>
+											<p>{% if product|length > 0 %}{{ product.0 }}{% endif %}</p>
+											</ul>
+											{% endfor %}
+											<h2>Womens Wear:</h2>
+											<p>{% if product|length > 1 %}{{ product.1 }}{% endif %}</p>
+
+											<h2>Kids Wear:</h2>
+											<p>{% if product|length > 2 %}{{ product.2 }}{% endif %}</p>
+											</ul>
+										{% endfor %}
+
+
+			 {% for category in categories %}
+            <li>
+                <h2>{{ forloop.counter }}. {{ category.name }}</h2>
+                <p>{{ category.description }}</p>
+                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+            </li>
+        {% endfor %}

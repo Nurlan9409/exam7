@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+    {% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item List</title>
+</head>
+<body>
+    <h1>Item List</h1>
+    <a href="{% url 'item_create' %}">Create new Category</a>
+    <ul>
+        {% for item in items %}
+            <li>
+                <a href="{% url 'item_update' item.pk %}">Update</a>
+                <a href="{% url 'item_delete' item.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+{% endblock %}
