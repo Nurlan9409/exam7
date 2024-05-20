@@ -21,3 +21,29 @@
                 <img src="{{ category.image.url }}" alt="{{ category.name }}">
             </li>
         {% endfor %}
+
+
+
+
+
+										<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+</head>
+<body>
+    <h1>Search</h1>
+    <form method="get" action="{% url 'search' %}">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <h2>Results</h2>
+    <ul>
+        {% for product in results %}
+            <li>{{ product.title }}</li>
+        {% empty %}
+            <li>No results found</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -138,7 +138,18 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<form method="get" action="{% url 'search' %}">
+								{{ form.as_p }}
+								<button type="submit">Search</button>
+							</form>
+							<h2>Results</h2>
+							<ul>
+								{% for product in results %}
+									<li>{{ product.title }}</li>
+								{% empty %}
+									<li>No results found</li>
+								{% endfor %}
+							</ul>
 						</div>
 					</div>
 				</div>

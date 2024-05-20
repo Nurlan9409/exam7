@@ -11,6 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserLoginForm,UserRegisterForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponseNotFound
+
 class LandingPageView(View):
     def get(self, request):
         category = Category.objects.all()
@@ -81,3 +83,45 @@ class UserLogOutView(View):
     def get(self, request):
         logout(request)
         return redirect("landing")
+
+
+class UserCrudView(View):
+    def get(self, request):
+        users = User.objects.all()
+        return render(request, "auth/crud.html", {'users':users})
+
+    def post(request):
+        if request.method == "POST":
+            user = User()
+            user.first_name = request.POST.get("first_name")
+            user.last_name = request.POST.get("last_name")
+            user.email = request.POST.get("email")
+            user.phone = request.POST.get("phone")
+            user.password = request.POST.get("password")
+            user.save()
+        return HttpResponseRedirect("/")
+
+    def edit(request, id):
+        try:
+            user = User.objects.get(id=id)
+
+            if request.method == "POST":
+                user.first_name = request.POST.get("first_name")
+                user.last_name = request.POST.get("last_name")
+                user.email = request.POST.get("email")
+                user.phone = request.POST.get("phone")
+                user.password = request.POST.get("password")
+                user.save()
+                return HttpResponseRedirect("/")
+            else:
+                return render(request, "edit.html", {"user": user})
+        except User.DoesNotExist:
+            return HttpResponseNotFound("<h2>Person not found</h2>")
+
+    def delete(request, id):
+        try:
+            user = User.objects.get(id=id)
+            user.delete()
+            return HttpResponseRedirect("/")
+        except User.DoesNotExist:
+            return HttpResponseNotFound("<h2>Person not found</h2>")

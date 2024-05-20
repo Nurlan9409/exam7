@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+    {% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CRUD</title>
+</head>
+<body>
+    <form method="POST" action="create/">
+        {% csrf_token %}
+       <p>
+            <label>First_name</label><br>
+            <input type="text" name="name" value="{{user.first_name}}" />
+        </p>
+        <p>
+            <label>LAst_name</label><br>
+            <input type="text" name="last_name" value="{{user.last_name}}" />
+        </p>
+          <p>
+            <label>email</label><br>
+            <input type="text" name="email" value="{{user.email}}" />
+        </p>
+          <p>
+            <label>phone</label><br>
+            <input type="text" name="phone" value="{{user.phone}}" />
+        </p>
+         <p>
+            <label>password</label><br>
+            <input type="text" name="password" value="{{user.password}}" />
+        </p>
+        <input type="submit" value="Save" >
+    </form>
+    {% if people.count > 0 %}
+    <h2>Userlist</h2>
+    <table>
+        <thead><th>Id</th><th>First_name</th><th>Last_name</th><th></th></thead>
+        {% for person in people %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td><a href="edit/{{user.id}}">Edit</a> | <a href="delete/{{user.id}}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
+
+{% endblock %}

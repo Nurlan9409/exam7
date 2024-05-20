@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+    {% block content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Edit</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>First_name</label><br>
+            <input type="text" name="name" value="{{user.first_name}}" />
+        </p>
+        <p>
+            <label>LAst_name</label><br>
+            <input type="text" name="last_name" value="{{user.last_name}}" />
+        </p>
+          <p>
+            <label>email</label><br>
+            <input type="text" name="email" value="{{user.email}}" />
+        </p>
+          <p>
+            <label>phone</label><br>
+            <input type="text" name="phone" value="{{user.phone}}" />
+        </p>
+         <p>
+            <label>password</label><br>
+            <input type="text" name="password" value="{{user.password}}" />
+        </p>
+        <input type="submit" value="Save" >
+    </form>
+</body>
+</html>
+{% endblock %}

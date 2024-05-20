@@ -3,13 +3,12 @@ from django.views import View
 from .models import Product,Category,Search
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from django.db.models import Q
 
 from django.utils.decorators import method_decorator
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
-from .forms import CategoryForm
+from .forms import CategoryForm,SearchForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -55,18 +54,12 @@ class ProductsListView(View):
         return Response(product.reyting,status=status.HTTP_200_OK)
 
 
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=['GET  '])
     def remaining(self,request,*args,**kwargs):
         product = self.get_object()
         product.remaining-= 1
         product.save()
         return Response(product.buy_count,status=status.HTTP_200_OK)
-
-class SearchResultsView(View):
-    def get(self, request):
-        query = request.GET.get('query')
-        results = Product.objects.filter(title=query)
-        return render(request, 'search_results.html', {'results': results, 'query': query})
 
 
 
@@ -97,3 +90,18 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'main/item_confirm_delete.html'
     success_url = reverse_lazy('item_list')
+
+
+
+
+class SearchListView(View):
+    def search(request):
+        form = SearchForm()
+        results = []
+        if request.method == 'GET':
+            form = SearchForm(request.GET)
+            if form.is_valid():
+                query = form.cleaned_data['query']
+                results = Product.objects.filter(title__icontains=query) | Product.objects.filter(price__icontains=query)
+
+        return render(request, 'search.html', {'form': form, 'results': results})
